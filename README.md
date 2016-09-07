@@ -1,4 +1,4 @@
-# Snale2
+# Snake2
 貪食蛇第二版
 https://azqooo-azqoo19224.c9users.io/Snake2/snake.php
 
