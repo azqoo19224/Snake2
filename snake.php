@@ -23,6 +23,7 @@
                 <h2 id = 'showSpeed'></h2>
             </div>
         </div>
+        
         <div id="setData">
             <table align='center' valign="middle">
                 <tr>
@@ -42,6 +43,20 @@
                     <td><input type="button" onclick="btnStart()" value="開始遊戲"/></td>
                 </tr>
             </table>
+            <h2><p>1.移動方式:</p></h2>
+            <h4><p>上下左右鍵</p></h4>
+            <h2><p>2.遊戲方式:</p>
+            <h4><p>吃到藍色食物則+10分</p>
+            <p>每得100分 將會提高速度一次</p></h4>
+            <h2><p>3.死亡條件: 撞到自己</p></h2>
+            <h2><p>4.補充說明:</p></h2>
+            <h4><p>蛇蛇可以穿牆 and 不會自己回頭自殺(與行徑路線相反則按鍵無效)</p></h4>
+            <h2><p>5.特殊建功能:</p></h2>
+            <h4><p>重新開始 Esc</p></h4>
+            <h4><p>暫停 Enter</p></h4>
+            <h4><p>加速 +</p></h4>
+            <h4><p>減速 -</p></h4>
+            
         </div>
     </body>
     
