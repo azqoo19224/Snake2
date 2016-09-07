@@ -4,8 +4,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <style>
         	button{
-        		width:20px;
-        		height:20px;
+        		width:25px;
+        		height:25px;
         		display: inline-block;
         		margin-right: -4px;
                 margin-top: -1px;
@@ -104,7 +104,7 @@
         document.onkeydown=keyFunction;
         getMap();
         getSnake();
-        getBlueFood();
+        getColor();
         getSpeed()
         meter1 = setInterval("countSecond()", speed);
     }
@@ -126,8 +126,8 @@
     }
     
     function getBlueFood() {
-        maxI = Math.round(Math.random()*10);
-        maxJ = Math.round(Math.random()*10);
+        maxI = Math.round(Math.random()*row);
+        maxJ = Math.round(Math.random()*con);
         //吃到食物 +分數
         if($("#"+maxI+"_"+maxJ).val() == 666) {
             $("#"+maxI+"_"+maxJ).css("background-color","#0000FF");
@@ -143,30 +143,33 @@
         }    
     }
     function getPurpleFood() {
-        maxI = Math.round(Math.random()*10);
-        maxJ = Math.round(Math.random()*10);
+        maxI = Math.round(Math.random()*row);
+        maxJ = Math.round(Math.random()*con);
         //吃到食物 +分數
         if($("#"+maxI+"_"+maxJ).val() == 666) {
             $("#"+maxI+"_"+maxJ).css("background-color","#770077");
             $("#"+maxI+"_"+maxJ).val(777);
-            //分數+100 提速
-                upSpeed();
-                getSpeed();
             $("#showScore").html(score*10);
+            
+            upSpeed();
+            getSpeed();
         } else {
             getPurpleFood();
         }    
     }
+    
     function getGreenleFood() {
-        maxI = Math.round(Math.random()*10);
-        maxJ = Math.round(Math.random()*10);
+        maxI = Math.round(Math.random()*row);
+        maxJ = Math.round(Math.random()*con);
         //吃到食物 +分數
         if($("#"+maxI+"_"+maxJ).val() == 666) {
             $("#"+maxI+"_"+maxJ).css("background-color","#00FF00");
             $("#"+maxI+"_"+maxJ).val(888);
+            $("#showScore").html(score*10);
+            if(score !=0 && score%10 < 5) {    
                 upSpeed();
                 getSpeed();
-            $("#showScore").html(score*10);
+            }
         } else {
             getGreenleFood();
         }    
