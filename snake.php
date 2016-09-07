@@ -49,7 +49,8 @@
             <h4><p>吃到藍色食物+10分</p>
                 <p>吃到綠色食物+50分</p>
                 <p>吃到紫色食物則+100分並且增加一個食物(最多10個食物)</p>
-            <p>每得100分 將會提高速度一次</p></h4>
+                <p>每得100分 將會提高速度一次</p>
+                <p>黃色食物不會加分 但會降速</p></h4>
             <h2><p>3.死亡條件: 撞到自己</p></h2>
             <h2><p>4.補充說明:</p></h2>
             <h4><p>蛇蛇可以穿牆 and 不會自己回頭自殺(與行徑路線相反則按鍵無效)</p>
@@ -175,6 +176,20 @@
         }    
     }
     
+    function getYellowFood() {
+        maxI = Math.round(Math.random()*row);
+        maxJ = Math.round(Math.random()*con);
+        //吃到食物 +分數
+        if($("#"+maxI+"_"+maxJ).val() == 666) {
+            $("#"+maxI+"_"+maxJ).css("background-color","#FFFF00");
+            $("#"+maxI+"_"+maxJ).val(9453);
+        } else {
+            getYellowFood();
+        }    
+    }
+    
+    
+    
     function getSpeed() {
         $("#showSpeed").html((speed/10));
     }
@@ -249,6 +264,10 @@
                 // alert(snake[0][0]+"_"+snake[0][1]);
             }
         }
+        if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 9453) {
+            downSpeed();
+            getSpeed();
+        }
         //藍色555  紫色777 綠色888 自己999
         if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 555) {
             score++;
@@ -278,13 +297,17 @@
     }
     
     function getColor() {
-        if (Math.round(Math.random()*10) == 10) {
+        number = Math.floor(Math.random()*8);
+        if (number == 7) {
                 getPurpleFood();
-            } else if (Math.round(Math.random()*10) == 9) {
+            } else if (number == 6) {
                 getGreenleFood();
             } else {
                 getBlueFood();
             }
+        if(number == 1){
+                getYellowFood();
+        }
     }
     //停止遊戲
     function stopCount() {   
