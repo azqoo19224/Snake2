@@ -46,11 +46,15 @@
             <h2><p>1.移動方式:</p></h2>
             <h4><p>上下左右鍵</p></h4>
             <h2><p>2.遊戲方式:</p>
-            <h4><p>吃到藍色食物則+10分</p>
+            <h4><p>吃到藍色食物+10分</p>
+                <p>吃到綠色食物+50分</p>
+                <p>吃到紫色食物則+100分並且增加一個食物(最多10個食物)</p>
             <p>每得100分 將會提高速度一次</p></h4>
             <h2><p>3.死亡條件: 撞到自己</p></h2>
             <h2><p>4.補充說明:</p></h2>
-            <h4><p>蛇蛇可以穿牆 and 不會自己回頭自殺(與行徑路線相反則按鍵無效)</p></h4>
+            <h4><p>蛇蛇可以穿牆 and 不會自己回頭自殺(與行徑路線相反則按鍵無效)</p>
+                <p>速度等級為1~30</p>
+                <p>越小速度越快</p></h4>
             <h2><p>5.特殊建功能:</p></h2>
             <h4><p>重新開始 Esc</p></h4>
             <h4><p>暫停 Enter</p></h4>
@@ -71,8 +75,9 @@
     snake[2] = [0,0];
     var path = 40;
     var key = 40;
-    var score = -1;
+    var score = 0;
     var speed = 200;
+    var countFood = 1;
     
     getSelectSpeet();
     //建立下拉式選單
@@ -99,7 +104,7 @@
         document.onkeydown=keyFunction;
         getMap();
         getSnake();
-        getFood();
+        getBlueFood();
         getSpeed()
         meter1 = setInterval("countSecond()", speed);
     }
@@ -120,7 +125,7 @@
         }
     }
     
-    function getFood() {
+    function getBlueFood() {
         maxI = Math.round(Math.random()*10);
         maxJ = Math.round(Math.random()*10);
         //吃到食物 +分數
@@ -128,16 +133,45 @@
             $("#"+maxI+"_"+maxJ).css("background-color","#0000FF");
             $("#"+maxI+"_"+maxJ).val(555);
             //分數+100 提速
-            score++;
             if(score !=0 &&score%10 == 0 ) {
                 upSpeed();
                 getSpeed();
             }
             $("#showScore").html(score*10);
         } else {
-            getFood();
+            getBlueFood();
         }    
     }
+    function getPurpleFood() {
+        maxI = Math.round(Math.random()*10);
+        maxJ = Math.round(Math.random()*10);
+        //吃到食物 +分數
+        if($("#"+maxI+"_"+maxJ).val() == 666) {
+            $("#"+maxI+"_"+maxJ).css("background-color","#770077");
+            $("#"+maxI+"_"+maxJ).val(777);
+            //分數+100 提速
+                upSpeed();
+                getSpeed();
+            $("#showScore").html(score*10);
+        } else {
+            getPurpleFood();
+        }    
+    }
+    function getGreenleFood() {
+        maxI = Math.round(Math.random()*10);
+        maxJ = Math.round(Math.random()*10);
+        //吃到食物 +分數
+        if($("#"+maxI+"_"+maxJ).val() == 666) {
+            $("#"+maxI+"_"+maxJ).css("background-color","#00FF00");
+            $("#"+maxI+"_"+maxJ).val(888);
+                upSpeed();
+                getSpeed();
+            $("#showScore").html(score*10);
+        } else {
+            getGreenleFood();
+        }    
+    }
+    
     function getSpeed() {
         $("#showSpeed").html((speed/10));
     }
@@ -164,7 +198,6 @@
             location.href="https://azqooo-azqoo19224.c9users.io/Snake2/snake.php";
             return false;
         }
-        
     }
     //提速
     function upSpeed () {
@@ -213,14 +246,26 @@
                 // alert(snake[0][0]+"_"+snake[0][1]);
             }
         }
+        //藍色555  紫色777 綠色888 自己999
         if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 555) {
-            getFood();
+            score++;
+            getColor();
+        } else if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 777) {
+            score+=10;
+            if(countFood <=10) {
+                getBlueFood();
+            }
+            countFood++;
+            getColor();
+        } else if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 888) {
+            score+=5;
+            getColor();
         } else if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 999) {
             stopCount();
         } else {
-        $("#"+snake[snake.length - 1][0]+"_"+snake[snake.length-1][1]).css("background-color","#000000");
-        $("#"+snake[snake.length - 1][0]+"_"+snake[snake.length-1][1]).val(666);
-        snake.pop();
+            $("#"+snake[snake.length - 1][0]+"_"+snake[snake.length-1][1]).css("background-color","#000000");
+            $("#"+snake[snake.length - 1][0]+"_"+snake[snake.length-1][1]).val(666);
+            snake.pop();
         }
         //+頭-尾    
         $("#"+snake[1][0]+"_"+snake[1][1]).css("background-color","#FF0000");
@@ -228,10 +273,20 @@
         $("#"+snake[0][0]+"_"+snake[0][1]).val(999);
         path = key;
     }
+    
+    function getColor() {
+        if (Math.round(Math.random()*10) == 10) {
+                getPurpleFood();
+            } else if (Math.round(Math.random()*10) == 9) {
+                getGreenleFood();
+            } else {
+                getBlueFood();
+            }
+    }
     //停止遊戲
     function stopCount() {   
         clearInterval(meter1);
-        alert("失敗");
+        alert("********遊戲結束******** \n你的得分為:"+score*10+"\n請按Esc重新開始");
     }
 
     </script>
