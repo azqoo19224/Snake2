@@ -1,5 +1,6 @@
 # Snale2
 貪食蛇第二版
+https://azqooo-azqoo19224.c9users.io/Snake2/snake.php
 
 1.移動方式:
 上下左右鍵
