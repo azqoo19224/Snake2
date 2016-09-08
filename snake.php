@@ -44,18 +44,19 @@
                 </tr>
             </table>
             <h2><p>1.移動方式:</p></h2>
-            <h4><p>上下左右鍵</p></h4>
-            <h2><p>2.遊戲方式:</p>
-            <h4><p>吃到藍色食物+10分</p>
+            <p>上下左右鍵</p>
+            <h2><p>2.遊戲方式:</p></h2>
+                <p>吃到藍色食物+10分</p>
                 <p>吃到綠色食物+50分</p>
                 <p>吃到紫色食物則+100分並且增加一個食物(最多10個食物)</p>
                 <p>每得100分 將會提高速度一次</p>
-                <p>黃色食物不會加分 但會降速</p></h4>
+                <p>黃色食物不會加分 但會降速</p>
             <h2><p>3.死亡條件: 撞到自己</p></h2>
             <h2><p>4.補充說明:</p></h2>
-            <h4><p>蛇蛇可以穿牆 and 不會自己回頭自殺(與行徑路線相反則按鍵無效)</p>
-                <p>速度等級為1~30</p>
-                <p>越小速度越快</p></h4>
+            <p>蛇蛇可以穿牆 and 不會自己回頭自殺(與行徑路線相反則按鍵無效)</p>
+                <p>速度等級為1~20</p>
+            <h4><p>1~4請手動加速(+)  一般速度等級上限是5</p></h4>
+                <p>越小速度越快</p>
             <h2><p>5.特殊建功能:</p></h2>
             <h4><p>重新開始 Esc</p></h4>
             <h4><p>暫停 Enter</p></h4>
@@ -85,7 +86,7 @@
     function getSelectSpeet() {
         var str;
         str = "<select id='speed'>";
-        for (i = 1; i <= 30; i++) {
+        for (i = 5; i <= 20; i++) {
             if (i == 20) {
                 str += "<option value='"+i*10+"' selected='selected'>"+i+"</option>";
             } else {
@@ -133,11 +134,6 @@
         if($("#"+maxI+"_"+maxJ).val() == 666) {
             $("#"+maxI+"_"+maxJ).css("background-color","#0000FF");
             $("#"+maxI+"_"+maxJ).val(555);
-            //分數+100 提速
-            if(score !=0 &&score%10 == 0 ) {
-                upSpeed();
-                getSpeed();
-            }
             $("#showScore").html(score*10);
         } else {
             getBlueFood();
@@ -151,9 +147,6 @@
             $("#"+maxI+"_"+maxJ).css("background-color","#770077");
             $("#"+maxI+"_"+maxJ).val(777);
             $("#showScore").html(score*10);
-            
-            upSpeed();
-            getSpeed();
         } else {
             getPurpleFood();
         }    
@@ -167,10 +160,6 @@
             $("#"+maxI+"_"+maxJ).css("background-color","#00FF00");
             $("#"+maxI+"_"+maxJ).val(888);
             $("#showScore").html(score*10);
-            if(score !=0 && score%10 < 5) {    
-                upSpeed();
-                getSpeed();
-            }
         } else {
             getGreenleFood();
         }    
@@ -192,24 +181,19 @@
     
     function getSpeed() {
         $("#showSpeed").html((speed/10));
+        // $("#showSpeed").html(speed);
     }
 
     function keyFunction() {
         if(event.keyCode == 39 || event.keyCode == 38 || event.keyCode == 37 || event.keyCode == 40) {
                 key = event.keyCode;
         } else if (event.keyCode == 13) {
-                alert("暫停");
+            alert("暫停");
 
         } else if (event.keyCode == 107) {
-            clearInterval(meter1);
             upSpeed();
-            meter1 = setInterval("countSecond()", speed);
-            getSpeed();
         } else if (event.keyCode == 109) {
-            clearInterval(meter1);
             downSpeed();
-            meter1 = setInterval("countSecond()", speed);
-            getSpeed();
         } 
         if (event.keyCode == 27) {
             alert("重新開始");
@@ -219,14 +203,22 @@
     }
     //提速
     function upSpeed () {
-        if(speed > 10) {
+        if(speed > 50) {
             speed -= 10;
+            getSpeed();
+            clearInterval(meter1);
+            meter1 = setInterval("countSecond()", speed);
+            
         }
     }
     //降速
     function downSpeed () {
-        if(speed < 300) {
+        if(speed < 200) {
             speed += 10;
+            getSpeed();
+            clearInterval(meter1);
+            meter1 = setInterval("countSecond()", speed);
+            
         }
     }
     //勇往直前
@@ -266,21 +258,28 @@
         }
         if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 9453) {
             downSpeed();
-            getSpeed();
         }
         //藍色555  紫色777 綠色888 自己999
         if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 555) {
             score++;
+            if(score !=0 &&score%10 == 0 ) {
+                upSpeed();
+            }
             getColor();
         } else if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 777) {
             score+=10;
             if(countFood <=10) {
-                getBlueFood();
+                getColor();
+                countFood++;
             }
-            countFood++;
+            
+            upSpeed();
             getColor();
         } else if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 888) {
             score+=5;
+            if(score !=0 && score%10 < 5) {    
+                upSpeed();
+            }
             getColor();
         } else if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 999) {
             stopCount();
