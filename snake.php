@@ -256,6 +256,7 @@
                 // alert(snake[0][0]+"_"+snake[0][1]);
             }
         }
+        //黃色9453
         if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 9453) {
             downSpeed();
         }
@@ -281,12 +282,14 @@
                 upSpeed();
             }
             getColor();
-        } else if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 999) {
-            stopCount();
         } else {
             $("#"+snake[snake.length - 1][0]+"_"+snake[snake.length-1][1]).css("background-color","#000000");
             $("#"+snake[snake.length - 1][0]+"_"+snake[snake.length-1][1]).val(666);
             snake.pop();
+        }
+        
+        if ($("#"+snake[0][0]+"_"+snake[0][1]).val() == 999) {
+            stopCount();
         }
         //+頭-尾    
         $("#"+snake[1][0]+"_"+snake[1][1]).css("background-color","#FF0000");
