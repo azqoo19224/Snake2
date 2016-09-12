@@ -27,10 +27,10 @@
         <div id="setData">
             <table align='center' valign="middle">
                 <tr>
-                    <td><input type="text" id = "length" name="length" value='30'/></td><td>長</td>
+                    <td><input type="text" id = "length" name="length" value='25'/></td><td>長</td>
                 </tr>
                 <tr>
-                    <td><input type="text" id = "width" name="width" value='30'/></td><td>寬</td>
+                    <td><input type="text" id = "width" name="width" value='40'/></td><td>寬</td>
                 </tr>
             </table>
             <table align='center' valign="middle">
@@ -191,7 +191,7 @@
             alert("暫停");
 
         } else if (event.keyCode == 107) {
-            upSpeed();
+            upupSpeed();
         } else if (event.keyCode == 109) {
             downSpeed();
         } 
@@ -208,7 +208,14 @@
             getSpeed();
             clearInterval(meter1);
             meter1 = setInterval("countSecond()", speed);
-            
+        }
+    }
+    function upupSpeed(){
+        if(speed > 10) {
+            speed -= 10;
+            getSpeed();
+            clearInterval(meter1);
+            meter1 = setInterval("countSecond()", speed);
         }
     }
     //降速
